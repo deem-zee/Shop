@@ -1,17 +1,17 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="banner">Welcome to our shop!</div>
+    <products-list></products-list>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import ProductsList from './components/ProductsList.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    'products-list': ProductsList,
   }
 }
 </script>
@@ -24,5 +24,11 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+.banner {
+  font-size: 70px;
+  background: rgb(21, 181, 114);
+  height: 200px;
 }
 </style>

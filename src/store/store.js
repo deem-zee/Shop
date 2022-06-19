@@ -20,8 +20,21 @@ export const store = new Vuex.Store({
             return state.products;
         },
         error(state) {
-            return state.errorStatus
-        }
+            return state.errorStatus;
+        },
+        cartProducts(state) {
+            return state.cart.map(cartItem => { 
+                const product = state.products.find(product =>  product.id === cartItem.id)
+                   
+                    return {
+                        title: product.title,
+                        price: product.price,
+                        description: product.description,
+                        // quantity: cartItem.quantity
+                    }
+
+            })
+        },
     },
 
     actions: {
@@ -50,7 +63,9 @@ export const store = new Vuex.Store({
         addToCart(context, product) {
             const cartItem = context.state.cart.find(item => item.id === product.id);
             console.log(cartItem);
-            context.commit('pushProductToCart', product.id);
+            if (!cartItem) {
+                context.commit('pushProductToCart', product.id)
+            }
         }
 
     },
@@ -66,7 +81,7 @@ export const store = new Vuex.Store({
         pushProductToCart(state, productId) {
             state.cart.push({
                 id: productId,
-                quantity: 1
+                // quantity: 1,
             })
         },
     }

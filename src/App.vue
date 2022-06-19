@@ -1,17 +1,18 @@
 <template>
   <div id="app">
-    <div class="banner">Welcome to our shop!</div>
-    <products-list></products-list>
+    <header-component></header-component>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import ProductsList from './components/ProductsList.vue'
+/* eslint-disable vue/no-unused-components */
+import HeaderComponent from './components/HeaderComponent.vue'
 
 export default {
   name: 'App',
   components: {
-    'products-list': ProductsList,
+    'header-component': HeaderComponent,
   }
 }
 </script>

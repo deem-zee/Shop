@@ -1,12 +1,13 @@
 <template>
   <div>
     <h1>Products List</h1>
+    <input type="text" class="search" placeholder="Искать">
     <ul class="container">
         <li v-for="(product, index) in products" :key="index" class="container-prod">
             <h3>{{product.title}}</h3>
             <img :src='product.image' alt="">
-            <p>Price: ${{product.price}}</p>
-            <button class="btn add" @click="addToCart(product)">Add</button>
+            <p class="price">Price: ${{product.price}}</p>
+            <button class="btn add" @click="addToCart(product)">В корзину</button>
         </li>
     </ul>
   </div>
@@ -44,6 +45,7 @@ export default {
 </script>
 
 <style scope>
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro&display=swap');
 .container {
     /* width: 1200px; */
     display: flex;
@@ -88,14 +90,58 @@ export default {
 }
 
 .btn {
-  width: 80px;
-  height: 40px;
-  background: rgb(27, 167, 116);
-  border-radius: 0.5rem;
+  align-items: center;
+    background-color: #005bff;
+    border-radius: 6px;
+    box-sizing: border-box;
+    color: #fff;
+    display: inline-flex;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    justify-content: center;
+    line-height: 18px;
+    min-height: 40px;
+    min-width: 120px;
+    padding: 0 12px;
+    text-align: center;
 }
 
 .btn:hover {
   cursor: pointer;
+  background-color: #0b43a9;
+}
+
+.price {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-style: normal;
+  letter-spacing: normal;
+  text-decoration: none;
+  text-transform: none;
+  word-spacing: normal;
+  font-weight: 800;
+  font-size: 20px;
+}
+
+.search {
+  width: 50%;
+  height: 35px;
+  border-radius: 10px;
+  border: 1px solid #0b43a9;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-style: normal;
+  letter-spacing: normal;
+  text-decoration: none;
+  text-transform: none;
+  word-spacing: normal;
+  font-weight: 600;
+  font-size: 20px;
+  padding: 10px;
+}
+input:focus {
+
+  border-radius: 10px;
+  border: 1px solid #0b43a9;
 }
 
 </style>

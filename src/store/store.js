@@ -11,7 +11,8 @@ export const store = new Vuex.Store({
         products: [],
         cart: [],
         error: false,
-        errorStatus:  null
+        errorStatus:  null,
+        total: 0,
 
     },
 
@@ -30,7 +31,7 @@ export const store = new Vuex.Store({
                         title: product.title,
                         price: product.price,
                         description: product.description,
-                        // quantity: cartItem.quantity
+                        quantity: cartItem.quantity
                     }
 
             })
@@ -41,31 +42,28 @@ export const store = new Vuex.Store({
         getProducts(context){
             Vue.axios.get('https://fakestoreapi.com/products')
            .then((response) => {
-               console.log(response.data)
                 context.commit("setProducts", response.data)
               })
             .catch(err => {
                 if(err.response) {
-                    // console.log(err.response.data);
+
                     console.log(err.response.status);
                     context.commit("getError", err.response.status)
                 }
-                //     console.log(err.response.headers);
-                // } else if (err.request) {
-                //     console.log(err.request);
-                // } else {
-                //     console.log('Error', err.message);
-                // }
-                // console.log(err.config);
             }) 
         },
 
         addToCart(context, product) {
             const cartItem = context.state.cart.find(item => item.id === product.id);
-            console.log(cartItem);
             if (!cartItem) {
                 context.commit('pushProductToCart', product.id)
-            }
+               } else {
+                context.commit('incrementItemQuantity', cartItem)
+               }
+               context.commit('decrementProductInventory', product)
+        },
+        clearCart(context) {
+            context.commit('deleteAllFromCart');
         }
 
     },
@@ -81,9 +79,20 @@ export const store = new Vuex.Store({
         pushProductToCart(state, productId) {
             state.cart.push({
                 id: productId,
-                // quantity: 1,
+                quantity: 1,
             })
         },
+        incrementItemQuantity(state, cartItem) {
+            cartItem.quantity++
+        },
+
+        decrementProductInventory(state, product) {
+            product.inventory--
+        },
+        deleteAllFromCart(state) {
+            state.cart = [];
+        },
+
     }
 
  })

@@ -2,7 +2,8 @@
     <nav>
         <ul>
             <li><router-link to="/" exact>Товары</router-link></li>
-            <li><router-link to="/cart" exact> <img class="cartImg" >Коризна</router-link></li>
+            <li><router-link to="/cart" exact> <img class="cartImg" >Корзина</router-link></li>
+            <li><router-link to="/autho" exact>Войти</router-link></li>
         </ul>
     </nav>
 </template>

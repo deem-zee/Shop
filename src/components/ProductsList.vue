@@ -3,13 +3,20 @@
     <h1>Products List</h1>
     <input type="text" class="search" placeholder="Искать">
     <ul class="container">
-        <li v-for="(product, index) in products" :key="index" class="container-prod">
+        <li v-for="product in productsShow[this.currentPage - 1]" :key="product.id" class="container-prod">
             <h3>{{product.title}}</h3>
             <img :src='product.image' alt="">
             <p class="price">Price: ${{product.price}}</p>
             <button class="btn add" @click="addToCart(product)">В корзину</button>
         </li>
     </ul>
+    <div id="page-block">
+            <button @click="toFirstPage" class="btn">На первую</button>
+            <button @click="previousPage" class="btn">Предыдущая</button>
+            <span>{{currentPage}}</span>
+            <button @click="nextPage" class="btn">Следующая</button>
+            <button @click="toLastPage" class="btn">На последнюю</button>
+    </div>
   </div>
 </template>
 
@@ -18,28 +25,45 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import Vue from 'vue'
 import { mapActions, mapGetters } from "vuex";
+import _ from 'lodash';
 
 Vue.use(VueAxios, axios)
 
 export default {
-    // data() {
-    //     return {
-    //         products: []
-    //     }
-    // },
-    // created() {
-    //        this.$http.get("https://fakestoreapi.com/products").then((response) => {
-    //             this.products = response.data
-    //         })
-    // }
+    data() {
+        return {
+            currentPage: 1, 
+        }
+    },
+   
   computed: {
     ...mapGetters(["products", "error"]),
+    productsShow() {  
+            return _.chunk(this.products, 5);
+        },
   },
   methods: {
     ...mapActions(["getProducts", "addToCart"]),
+    nextPage() {
+        if (this.currentPage < Math.round(this.products.length/6)) {
+            this.currentPage++;
+        }
+    },
+    previousPage() {
+        if (this.currentPage > 1) {
+            this.currentPage--;
+        }
+    },
+    toFirstPage() {
+        this.currentPage = 1;
+    },
+    toLastPage() {
+        this.currentPage = Math.floor(this.products.length/6);
+    }
   },
   created() {
     this.getProducts();
+    console.log(this.products)
   },
 }
 </script>
@@ -105,6 +129,7 @@ export default {
     min-width: 120px;
     padding: 0 12px;
     text-align: center;
+    margin: 0 10px;
 }
 
 .btn:hover {

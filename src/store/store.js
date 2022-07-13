@@ -31,11 +31,21 @@ export const store = new Vuex.Store({
                         title: product.title,
                         price: product.price,
                         description: product.description,
+                        img: product.image,
                         quantity: cartItem.quantity
                     }
 
             })
         },
+        getTotal(state) {
+            let total = 0;
+            (state.cart.map(cartItem => {
+                const prod = state.products.find(product => product.id === cartItem.id)
+                return total += prod.price * cartItem.quantity;
+            }));
+
+            return  total;
+        }
     },
 
     actions: {
@@ -54,17 +64,30 @@ export const store = new Vuex.Store({
         },
 
         addToCart(context, product) {
+            console.log(product)
             const cartItem = context.state.cart.find(item => item.id === product.id);
             if (!cartItem) {
                 context.commit('pushProductToCart', product.id)
                } else {
                 context.commit('incrementItemQuantity', cartItem)
                }
-               context.commit('decrementProductInventory', product)
+            //    context.commit('decrementProductInventory', product)
         },
         clearCart(context) {
             context.commit('deleteAllFromCart');
+        },
+        deleteFromCart(context) {
+            context.commit('deleteItemFromCart')
+        },
+        addItemQuantity(context) {
+            const cartItem = context.state.cart.find(item => (item.id));
+            context.commit('incrementItemQuantity', cartItem)
+        },
+        decrementItem(context) {
+            const cartItem = context.state.cart.find(item => (item.id));
+            context.commit('decrementItemQuantity', cartItem)
         }
+        
 
     },
 
@@ -86,13 +109,18 @@ export const store = new Vuex.Store({
             cartItem.quantity++
         },
 
-        decrementProductInventory(state, product) {
-            product.inventory--
+        decrementItemQuantity(state, cartItem) {
+            if(cartItem.quantity > 1) {
+               cartItem.quantity-- 
+            }
+            
         },
         deleteAllFromCart(state) {
             state.cart = [];
         },
-
+        deleteItemFromCart(state, cartItem) {
+            state.cart.splice(cartItem, 1)
+        }
     }
 
  })

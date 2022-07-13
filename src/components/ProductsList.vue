@@ -1,9 +1,19 @@
 <template>
   <div>
     <h1>Products List</h1>
-    <input type="text" class="search" placeholder="Искать">
-    <ul class="container">
+    <input type="text" v-model="search" @keyup="searchItems" class="search" placeholder="Искать" >
+    <ul v-if="search !== ''" class="container">
+        <li v-for="product of productsShow[this.currentPage - 1]" :key="product.id" class="container-prod">
+          <p>abrakadabra{{currentPage}}</p>
+            <h3>{{product.title}}</h3>
+            <img :src='product.image' alt="">
+            <p class="price">Price: ${{product.price}}</p>
+            <button class="btn add" @click="addToCart(product)">В корзину</button>
+        </li>
+    </ul>
+    <ul v-if="searchResult[0] == '' || searchResult.length == 0" class="container">
         <li v-for="product in productsShow[this.currentPage - 1]" :key="product.id" class="container-prod">
+            <p>{{currentPage}}</p>
             <h3>{{product.title}}</h3>
             <img :src='product.image' alt="">
             <p class="price">Price: ${{product.price}}</p>
@@ -11,11 +21,11 @@
         </li>
     </ul>
     <div id="page-block">
-            <button @click="toFirstPage" class="btn">На первую</button>
-            <button @click="previousPage" class="btn">Предыдущая</button>
-            <span>{{currentPage}}</span>
-            <button @click="nextPage" class="btn">Следующая</button>
-            <button @click="toLastPage" class="btn">На последнюю</button>
+            <button v-bind:disabled = "isFirst" @click="toFirstPage" class="btn">На первую</button>
+            <button v-bind:disabled = "isFirst" @click="previousPage" class="btn">Предыдущая</button>
+            <span>{{currentPage}}/{{totalPages}}</span>
+            <button v-bind:disabled = "isLast" @click="nextPage" class="btn">Следующая</button>
+            <button v-bind:disabled = "isLast" @click="toLastPage" class="btn">На последнюю</button>
     </div>
   </div>
 </template>
@@ -32,20 +42,46 @@ Vue.use(VueAxios, axios)
 export default {
     data() {
         return {
-            currentPage: 1, 
+            currentPage: 1,
+            search: '',
+            searchResult: [],
+            isPageLast: false,
+            isPageFirst: true,
         }
     },
    
   computed: {
     ...mapGetters(["products", "error"]),
-    productsShow() {  
-            return _.chunk(this.products, 5);
-        },
+    productsShow() {
+      if (this.search !== '') {
+        console.log(_.chunk(this.searchResult, 4))
+        return _.chunk(this.searchResult, 4);
+      }
+         return _.chunk(this.products, 4);
+      },
+
+      isLast() {
+        if (this.currentPage == Math.floor(this.products.length/4) ) {
+          return true;
+        }
+        return false;
+      },
+      isFirst() {
+        if(this.currentPage == 1) {
+          return true;
+        }
+        return false;
+      },
+      totalPages() {
+        console.log(this.productsShow.length)
+        return this.productsShow.length;
+      }
+    //   
   },
   methods: {
     ...mapActions(["getProducts", "addToCart"]),
     nextPage() {
-        if (this.currentPage < Math.round(this.products.length/6)) {
+        if (this.currentPage < this.totalPages) {
             this.currentPage++;
         }
     },
@@ -58,12 +94,22 @@ export default {
         this.currentPage = 1;
     },
     toLastPage() {
-        this.currentPage = Math.floor(this.products.length/6);
+        this.currentPage = this.totalPages;
+    },
+    searchItems() {
+      console.log(this.search, this.products);
+      let goal = this.search;
+      if(this.search !== '') {
+        this.searchResult = this.products.filter(item => {
+        return item.title.toLowerCase().match(goal);
+      });
+      }
+      
+      
     }
   },
   created() {
     this.getProducts();
-    console.log(this.products)
   },
 }
 </script>

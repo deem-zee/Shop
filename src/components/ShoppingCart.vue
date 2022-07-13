@@ -6,17 +6,17 @@
        <ul>
           <li v-for="(product, index) in cartProducts" :key="index">
               <h2>{{product.title}}</h2>
+              <div><img :src="product.img" alt=""></div>
               <p>{{product.description}}</p>
               <p>${{product.price}}</p>
-              <p><button class="btn">-</button>quantity: {{product.quantity}}<button @click="addToCart" class="btn">+</button></p>
-              <button class="btn del">Удалить</button>
+              <p><button @click="decrementItem" class="btn">-</button>quantity: {{product.quantity}}<button @click="addItemQuantity" class="btn">+</button></p>
+              <button @click="deleteFromCart" class="btn del">Удалить</button>
           </li>
       </ul>
-      <!-- <h3>{{getTotal}}</h3> -->
-      <button class="btn" v-if="cartProducts.length > 0">Оформить заказ</button>
+      <router-link to="/autho"><button class="btn" v-if="cartProducts.length > 0">Оформить заказ</button></router-link>
       <button v-if="cart.length != 0" @click="clearCart" class="btn clearCart">Очистить корзину</button>
       </div>
-      
+      <p>Total: ${{getTotal}}</p>
   </div>
 </template>
 
@@ -24,12 +24,17 @@
 import { mapState, mapGetters, mapActions } from "vuex"
 
 export default {
+    data() {
+        return {
+            
+        }
+    },
     computed: {
         ...mapState(["cart"]),
-        ...mapGetters(["cartProducts"])
+        ...mapGetters(["cartProducts", "getTotal"]),
     },
     methods: {
-        ...mapActions(["clearCart", "addToCart"])
+        ...mapActions(["clearCart", "addToCart", "deleteFromCart", "addItemQuantity", "decrementItem"]),
     }
 
     
@@ -67,5 +72,9 @@ export default {
     }
     .clearCart:hover {
         background: rgb(159, 19, 19);
+    }
+    div img {
+        width: 200px;
+        height: 200px;
     }
 </style>

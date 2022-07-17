@@ -71,7 +71,6 @@ export const store = new Vuex.Store({
                } else {
                 context.commit('incrementItemQuantity', cartItem)
                }
-            //    context.commit('decrementProductInventory', product)
         },
         clearCart(context) {
             context.commit('deleteAllFromCart');
@@ -92,26 +91,16 @@ export const store = new Vuex.Store({
             const singleItem = context.state.products.find(item =>(item.id))
             return singleItem;
         },
-        pushItemToCart(context, product) {
-            console.log('pushItemToCart: ',product)
-            // const cartItem = context.state.products.find(item => (item.id));
-            // const product = context.state.cart.find(item =>  {
-            //     return (item.id == cartItem.id)
-            // })
-            // if (!product) {
-            //    context.commit('pushProductToCart', cartItem.id) 
-            // } else {
-            //     context.commit("incrementItemQuantity", product)
-            // }
-            const cartItem = context.state.cart.find(item => item.id === product.id);
-            if (!cartItem) {
-                context.commit('pushProductToCart', product.id)
-               } else {
-                context.commit('incrementItemQuantity', cartItem)
-               }
+        // pushItemToCart(context, product) {
+        //     const cartItem = context.state.cart.find(item => item.id === product.id);
+        //     if (!cartItem) {
+        //         context.commit('pushProductToCart', product.id)
+        //        } else {
+        //         context.commit('incrementItemQuantity', cartItem)
+        //        }
 
               
-        }
+        // }
         
 
     },

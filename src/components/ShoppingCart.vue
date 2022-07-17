@@ -1,11 +1,11 @@
 <template>
   <div class="container">
-    <h1>Shopping Cart</h1>
-    <p v-if="cartProducts.length == 0" class="empty">Ваша корзина пока пуста</p>
+    <h1>Ваша корзина:</h1>
+    <p class="empty emptyShoppingCart" v-if="cartProducts.length == 0">Ваша корзина пока пуста</p>
     <div v-if="clear" class="clearCart">
         <p>Вы действительно хотите удалить все товары из корзины?</p>
-        <button @click="multiClick">Да</button>
-        <button @click="cancelClearCart">Нет</button>
+        <button @click="cancelClearCart" class="clearCart_cansel">Нет</button>
+        <button @click="multiClick" class="clearCart_confirm">Да</button>
     </div>
           
        <div class="ShoppingCartContainer" :class="{ShoppingCartList__Blur: isBlur}"> 
@@ -81,13 +81,152 @@ export default {
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro&display=swap');
-    .container {
+    
+    @media screen and (min-width: 360px) {
+        .container {
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 340px;
+            margin: 0 auto;
+            box-sizing: border-box;
+            
+            
+        }
+        .ShoppingCartContainer ul {
+            padding: 0 5px;
+        }
+
+        .ShoppingCartContainer li {
+            list-style:  none;
+        }
+
+       .ShoppingCartList {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+       }
+        .ShoppingCartList__ProductImg img{
+            width: 200px;
+            height: 200px;
+        }
+        .ShoppingCartList__PriceBlock__QuantityBtn {
+            height: 25px;
+            width: 25px;
+            border-radius: 50%;
+            border: none;
+            text-align: center;
+            margin: 0 10px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .ShoppingCartList__PriceBlock__QuantityBtn:active {
+            opacity: 0.8;
+        }
+        .ShoppingCartList__PriceBlock__del {
+        width: 30px;
+        height: 30px;
+        border: none;
+        border-radius: 5px;
+        background-image: url('https://img.icons8.com/wired/344/trash.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        
+    }
+     .ShoppingCartCheckout {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+  .ShoppingCartCheckout__clearCart {
+        order: 4;
+        width: 160px;
+        height: 40px;
+        background: rgb(230, 95, 95);
+        color: white;
+        border: none;
+        border-radius: 15px;
+        margin: 10px 0;
+        align-self: center;
+        font-size: 18px;
+        padding: 5px 0;
+    }
+    .ShoppingCartCheckout__clearCart:hover {
+        cursor: pointer;
+        opacity: 0.8;
+    }
+
+    .ShoppingCartCheckout__Buy {
+        background: rgb(85, 235, 118);
+        color: white;
+        width: 160px;
+        height: 40px;
+        border: none;
+        border-radius: 15px;
+        font-size: 18px;
+        padding: 5px 0;
+        
+        
+    }
+    .ShoppingCartCheckout__Buy:hover {
+        cursor: pointer;
+        opacity: 0.8;
+    }
+
+    .ShoppingCartList__Blur {
+        filter: blur(5px);
+    }
+
+    .clearCart {
+        width: 300px;
+        height: 300px;
+        background: white;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 1.5em;
+        color: #000;
+        z-index: 1;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .clearCart_confirm {
+        background: rgb(230, 95, 95);
+        color: white;
+        width: 150px;
+        height: 30px;
+        margin: 10px 0;
+        border-radius: 10px;
+        font-size: 20px;
+        border: none;
+    }
+    .clearCart_cansel {
+        background: rgb(85, 235, 118);
+        color: white;
+        width: 150px;
+        height: 30px;
+        margin: 10px 0;
+        border-radius: 10px;
+        font-size: 20px;
+        border: none;
+    }
+    
+    }
+
+/* screen min-width 768 */
+    /* @media screen and (min-width: 768px) {
+        .container {
         background: rgb(236, 234, 234);
 
     }
      li {
         list-style-type: none;
         margin: 10px  0;
+        min-width: 346px;
      }
     .ShoppingCartContainer {
         display: flex;
@@ -218,5 +357,7 @@ export default {
         color: white;
         z-index: 1;
     }
+    }
+     */
 
 </style>

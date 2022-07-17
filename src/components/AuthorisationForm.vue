@@ -57,7 +57,50 @@ export default {
 </script>
 
 <style scoped>
-.container {
+@media screen and (min-width: 360px) {
+  .container {
+    /* width: 100%; */
+    display: flex;
+  }
+  .authorisation, .registration {
+    width: 340px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .authorisation__header {
+    font-size: 24px;
+  }
+
+  .authorisation .authorisation__login, .authorisation__paswd, .authorisation__forget, .authorisation__submit, .authorisation__reg, .regForm,.registration__createAcc {
+    height: 40px;
+    width: 250px;
+    margin: 20px 0;
+    font-size: 22px;
+    border-radius: 5px;
+  }
+  .authorisation__forget {
+    border: none;
+    font-style: italic;
+    background: white;
+  }
+  .authorisation__submit, .authorisation__reg, .registration__createAcc {
+    background: rgb(14, 81, 239);
+    color: white;
+    border: none;
+  }
+
+  .authorisation__submit:active, .authorisation__reg:active, .registration__createAcc:active {
+    opacity: 0.8;
+  }
+
+  
+}
+
+
+@media screen and (min-width: 768px) {
+  .container {
   margin: 0 auto;
   border: 1px solid grey;
   width: 60%;
@@ -154,5 +197,7 @@ export default {
   margin: 2%;
   font-size: 1.2em;
 }
+}
+
 </style>
 

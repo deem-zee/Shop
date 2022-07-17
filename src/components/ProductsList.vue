@@ -1,42 +1,51 @@
 <template>
-  <div>
-    <h1>Products List</h1>
-    <input type="text" v-model="search" @keyup="searchItems" class="search" placeholder="Искать" >
+  <div class="productListTemplate">
+    <!-- Блок выбранного товара с подробным описанием товара -->
     <div v-if="showCard" class="singleProductCard">
-        <img :src="`${singleCard.imgUrl}`" alt="">
-        <h2>{{singleCard.title}}</h2>
-        <p>{{singleCard.description}}</p>
-        <p>{{singleCard.price}}</p>
-        <button class="btn add" @click="pushItemToCart(singleCard)">В корзину</button>
-        <button @click="closeSingleProduct" class="singleProductCard__close">x</button>
+      <div class="singleProductCard__product">
+        <img :src="`${singleCard.imgUrl}`" alt="" class="singleProductCard__img">
+        <div class="singleProductCard__text">
+          <h2>{{singleCard.title}}</h2>
+          <p>{{singleCard.description}}</p>
+          <p class="singleProductCard__price">Цена: ${{singleCard.price}}</p>
+        </div>
+      </div>
+      <button class="btn addBtn singleProductCard__add" @click="addToCart(singleCard)">В корзину</button>
+      <button @click="closeSingleProduct" class="singleProductCard__close">x</button>
     </div>
-    <div>
+    <!-- Блок всех товаров -->
+    <input type="text" v-model="search" @keyup="searchItems" class="search" placeholder="Искать" >
+    <div class="productListContainer" :class="{blur: showCard}">
       <ul v-if="search !== ''" class="container">
-        <li v-for="product of productsShow[this.currentPage - 1]" :key="product.id" class="container-prod">
+        <li v-for="product of productsShow[this.currentPage - 1]" :key="product.id" class="productListContainer__products">
+          <div @click="showSingleProduct(product)">
             <h3>{{product.title}}</h3>
             <img :src='product.image' alt="">
             <p class="price">Price: ${{product.price}}</p>
-            <button class="btn add" @click="addToCart(product)">В корзину</button>
+          </div>
+            <button class="btn addBtn" @click="addToCart(product)">В корзину</button>
         </li>
     </ul>
+    <!-- Выдача резульатов поиска -->
     <ul  v-if="search == ''" class="container">
-        <li  v-for="product in productsShow[this.currentPage - 1]" :key="product.id" class="container-prod">
+        <li  v-for="product in productsShow[this.currentPage - 1]" :key="product.id" class="productListContainer__products">
             <div @click="showSingleProduct(product)">
               <h3>{{product.title}}</h3>
               <img :src='product.image' alt="">
-              <p class="price">Price: ${{product.price}}</p>
+              <p class="price">Цена: ${{product.price}}</p>
             </div>
-            <button class="btn add" @click="addToCart(product)">В корзину</button>
+            <button class="btn addBtn" @click="addToCart(product)">В корзину</button>
             
             
         </li>
     </ul>
-    <div id="page-block">
-            <button v-bind:disabled = "isFirst" @click="toFirstPage" class="btn">На первую</button>
-            <button v-bind:disabled = "isFirst" @click="previousPage" class="btn">Предыдущая</button>
+    <!-- переключение страниц -->
+    <div class="page-block">
+            <button v-bind:disabled = "isFirst" @click="toFirstPage" class="btnFirst">На первую</button>
+            <button v-bind:disabled = "isFirst" @click="previousPage" class="btnPrev">Предыдущая</button>
             <span>{{currentPage}}/{{totalPages}}</span>
-            <button v-bind:disabled = "isLast" @click="nextPage" class="btn">Следующая</button>
-            <button v-bind:disabled = "isLast" @click="toLastPage" class="btn">На последнюю</button>
+            <button v-bind:disabled = "isLast" @click="nextPage" class="btnFwd">Следующая</button>
+            <button v-bind:disabled = "isLast" @click="toLastPage" class="btnLast">На последнюю</button>
     </div>
     </div>
     
@@ -141,12 +150,15 @@ export default {
       
     },
     closeSingleProduct() {
-      this.showCard = false;
-      this.singleCard.title = '';
-      this.singleCard.description = '';
-      this.singleCard.imgUrl = '';
-      this.singleCard.price = '';
-      this.singleCard.id = '';
+      if (this.showCard == true) {
+        this.showCard = false;
+        this.singleCard.title = '';
+        this.singleCard.description = '';
+        this.singleCard.imgUrl = '';
+        this.singleCard.price = '';
+        this.singleCard.id = '';
+      }
+      
     }
   },
   created() {
@@ -156,123 +168,168 @@ export default {
 </script>
 
 <style scope>
-@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro&display=swap');
-.container {
-    /* width: 1200px; */
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-}
-
-.container-prod {
-    list-style-type: none;
-    width: 30%;
-    border: 1px solid black;
-    margin: 10px;
-    padding: 5px;
-    border-radius: 0.75rem;
-    box-shadow:  6px 6px 2px 1px rgba(0, 0, 255, .2);
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro&family=Comfortaa:wght@300;400;500;600&family=Inter&family=Noto+Sans+Display&family=Roboto:ital,wght@0,300;0,400;1,100&family=Ubuntu:wght@300&display=swap');
+@media screen and (min-width: 340px) {
+  .productListTemplate {
+    width: 340px;
+    background: rgb(177, 174, 174);
     display: flex;
     flex-direction: column;
+    flex-wrap: nowrap;
     justify-content: center;
-    align-items: center;
-}
+    margin: 0 auto;
 
-.container-prod img {
+  }
+
+  .singleProductCard {
+    position: absolute;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    z-index: 1;
+    background: white;
+    padding: 10px 0;
+    font-family: 'Roboto', sans-serif;
+    margin: 0 auto;
+    
+  }
+
+  .singleProductCard__img {
     width: 200px;
     height: 200px;
-}
+  } 
 
-.container-prod h3 {
-    height: 50px;
-    width: 400px;
-}
-
-
-.singleProductCard img{
-  width: 150px;
-  height: 150px;
-},
-
-.error {
-  height: 100%;
-  color: black;
-  background: rgb(75, 2, 186);
-  text-align: center;
-  font-size: 148px;
-}
-
-.error .container, h1 {
-  display: none;
-}
-
-.btn {
-  align-items: center;
-    background-color: #005bff;
-    border-radius: 6px;
-    box-sizing: border-box;
-    color: #fff;
-    display: inline-flex;
-    font-family: 'Be Vietnam Pro', sans-serif;
-    font-size: 20px;
+  .singleProductCard__price {
+    font-family: 'Roboto', sans-serif;
     font-weight: 600;
+  }
+  .singleProductCard__close {
+    width:30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    font-size: 20px;
+    position: absolute;
+    top: 5px;
+    left: 88%;
+  }
+  .container {
+    margin: 0 auto;
+    padding: 0; 
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
     justify-content: center;
-    line-height: 18px;
-    min-height: 40px;
-    min-width: 120px;
-    padding: 0 12px;
-    text-align: center;
-    margin: 0 10px;
-}
+  }
 
-.btn:hover {
-  cursor: pointer;
-  background-color: #0b43a9;
+  .productListContainer {
+    width: 340px;
+    background: rgb(177, 174, 174);
+    margin: 10px auto;
+  }
+
+  .productListContainer img {
+    width: 200px;
+    height: 200px;
+  }
+  .productListContainer__products {
+  background: white;
+  margin: 0 auto;
+  list-style: none;
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  margin: 10px auto;
+  padding: 10px;
+  box-sizing: border-box;
+
 }
 
 .price {
-  font-family: 'Be Vietnam Pro', sans-serif;
-  font-style: normal;
-  letter-spacing: normal;
-  text-decoration: none;
-  text-transform: none;
-  word-spacing: normal;
-  font-weight: 800;
-  font-size: 20px;
-}
-
-.search {
-  width: 50%;
-  height: 35px;
-  border-radius: 10px;
-  border: 1px solid #0b43a9;
-  font-family: 'Be Vietnam Pro', sans-serif;
-  font-style: normal;
-  letter-spacing: normal;
-  text-decoration: none;
-  text-transform: none;
-  word-spacing: normal;
   font-weight: 600;
+}
+
+.addBtn {
+  width: 150px;
+  height: 40px;
+  background: rgb(85, 235, 118);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  margin: 0 auto;
+}
+
+.addBtn:active {
+  opacity: 0.4;
+  
+}
+.search {
+  height: 50px;
+  font-size: 24px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.page-block {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background: white;
+  width: 93%;
+  margin: 0 auto;
+  padding: 10px 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+.page-block span {
+  position: relative;
+  top: 25px;
+  background: white;
+  font-family: 'Roboto', sans-serif;
+  order: 2;
+  margin: 2px 4px;
   font-size: 20px;
-  padding: 10px;
-}
-input:focus {
-
-  border-radius: 10px;
-  border: 1px solid #0b43a9;
+  font-weight: 600;
 }
 
-.singleProductCard__close {
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  font-size: 1em;
-  /* transform: rotateZ(45deg) */
+.page-block button {
+  margin: 2px 4px;
+  width: 100px;
+  height: 40px;
+  font-family: 'Roboto', sans-serif;
+  border-radius: 5px;
+  border: none;
+  font-size: 16px;
 }
 
-.singleProductCard__close:hover {
-  opacity: 0.8;
-  cursor: pointer;
+.btnPrev {
+  order: 1;
 }
+
+.btnFwd {
+  order: 3;
+}
+
+.btnFirst {
+  order: 4;
+}
+
+.btnLast {
+  order: 5;
+  margin: 2px 4px;
+}
+
+.blur {
+  filter: blur(5px);
+}
+
+}
+
+
 
 </style>

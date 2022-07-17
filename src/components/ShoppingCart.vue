@@ -24,7 +24,7 @@
                         <button @click="decrementItem(product)" class="ShoppingCartList__PriceBlock__QuantityBtn">-</button>
                         кол-во: {{product.quantity}} шт.<button @click="addToCart(product)" class="ShoppingCartList__PriceBlock__QuantityBtn">+</button>
                     </div>
-                    <button @click="deleteFromCart" class="ShoppingCartList__PriceBlock__del"></button>
+                    <button @click="deleteFromCart(product)" class="ShoppingCartList__PriceBlock__del"></button>
                 </div>
 
                 </div>

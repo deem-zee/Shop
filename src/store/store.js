@@ -76,8 +76,9 @@ export const store = new Vuex.Store({
         clearCart(context) {
             context.commit('deleteAllFromCart');
         },
-        deleteFromCart(context) {
-            context.commit('deleteItemFromCart')
+        deleteFromCart(context, product) {
+            const cartItem = context.state.cart.find(item => (item.id === product.id));
+            context.commit('deleteItemFromCart', cartItem)
         },
         addItemQuantity(context) {
             const cartItem = context.state.cart.find(item => (item.id));
@@ -137,7 +138,8 @@ export const store = new Vuex.Store({
             state.cart = [];
         },
         deleteItemFromCart(state, cartItem) {
-            state.cart.splice(cartItem, 1)
+            const index = state.cart.indexOf(cartItem);
+            state.cart.splice(index, 1)
         }
     }
 

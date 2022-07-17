@@ -1,23 +1,46 @@
 <template>
-  <div>
-      <div class="cart">
-          <h1>Shopping Cart</h1>
-        <p v-if="cartProducts.length == 0" class="empty">Ваша корзина пока пуста</p>
-       <ul>
-          <li v-for="(product, index) in cartProducts" :key="index">
-              <h2>{{product.title}}</h2>
-              <div><img :src="product.img" alt=""></div>
-              <p>{{product.description}}</p>
-              <p>${{product.price}}</p>
-              <p><button @click="decrementItem" class="btn">-</button>quantity: {{product.quantity}}<button @click="addItemQuantity" class="btn">+</button></p>
-              <button @click="deleteFromCart" class="btn del">Удалить</button>
-          </li>
-      </ul>
-      <router-link to="/autho"><button class="btn" v-if="cartProducts.length > 0">Оформить заказ</button></router-link>
-      <button v-if="cart.length != 0" @click="clearCart" class="btn clearCart">Очистить корзину</button>
+  <div class="container">
+    <h1>Shopping Cart</h1>
+    <p v-if="cartProducts.length == 0" class="empty">Ваша корзина пока пуста</p>
+    <div v-if="clear" class="clearCart">
+        <p>Вы действительно хотите удалить все товары из корзины?</p>
+        <button @click="multiClick">Да</button>
+        <button @click="cancelClearCart">Нет</button>
+    </div>
+          
+       <div class="ShoppingCartContainer" :class="{ShoppingCartList__Blur: isBlur}"> 
+        <ul>
+            <li v-for="(product, index) in cartProducts" :key="index">
+                <div class="ShoppingCartList">
+                <div class="ShoppingCartList__ProductImg"><img :src="product.img" alt=""></div>
+                
+                <div class="ShoppingCartList__TextBlock">
+                <h2 class="prodTitle">{{product.title}}</h2>
+                <p class="prodDescription">{{product.description}}</p>
+                
+                <div class="ShoppingCartList__PriceBlock">
+                    <p style="font-weight:bold">Цена: ${{product.price * product.quantity}}</p>
+                    <p><button @click="decrementItem" class="ShoppingCartList__PriceBlock__QuantityBtn">-</button>кол-во: {{product.quantity}} шт.<button @click="addItemQuantity" class="ShoppingCartList__PriceBlock__QuantityBtn">+</button></p>
+                    <button @click="deleteFromCart" class="ShoppingCartList__PriceBlock__del"></button>
+                </div>
+
+                </div>
+                </div>
+            </li>
+        </ul>
+      
+      
+        <div v-if="cartProducts.length != 0" class="ShoppingCartCheckout">
+            <button v-if="cart.length != 0" @click="clearAll" class="ShoppingCartCheckout__clearCart">Очистить корзину</button>
+            <hr>
+            <p>К оплате: ${{getTotal}}</p>
+            <router-link to="/autho"><button class="ShoppingCartCheckout__Buy" v-if="cartProducts.length > 0">Оформить заказ</button></router-link>
+        </div>
       </div>
-      <p>Total: ${{getTotal}}</p>
-  </div>
+    </div>
+
+    
+ 
 </template>
 
 <script>
@@ -26,15 +49,30 @@ import { mapState, mapGetters, mapActions } from "vuex"
 export default {
     data() {
         return {
-            
+            clear: false,
+            isBlur: false,
         }
     },
     computed: {
         ...mapState(["cart"]),
         ...mapGetters(["cartProducts", "getTotal"]),
+        
+      
     },
     methods: {
         ...mapActions(["clearCart", "addToCart", "deleteFromCart", "addItemQuantity", "decrementItem"]),
+        multiClick() {
+            this.clearCart()
+            this.cancelClearCart()
+        },
+        clearAll() {
+            this.clear = true;
+            this.isBlur = true;
+        },
+        cancelClearCart() {
+            this.clear = false;
+            this.isBlur = false;
+        }
     }
 
     
@@ -43,38 +81,142 @@ export default {
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro&display=swap');
-    .cart {
-        min-height: 400px;
-        width: 100%;
+    .container {
         background: rgb(236, 234, 234);
-        position: relative;
-    }
 
-    .cart > p {
-        color: blue
     }
-
-    li{
+     li {
         list-style-type: none;
+        margin: 10px  0;
+     }
+    .ShoppingCartContainer {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
     }
-    .empty {
-        position: absolute;
-        display: inline-block;
-        font-family: 'Be Vietnam Pro', sans-serif;
-        font-weight: 500;
-        font-size: 40px;
-        top: 35%;
-        left: 35%;
+
+     ul {
+        width: 50%;
+    }
+
+    .ShoppingCartList {
+        width: 100%;
+        padding: 15px;
+        box-sizing: border-box;
+        background: white;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+    }
+    .ShoppingCartCheckout {
+        width: 20%;
+        height: fit-content;
+        background: white;
+        margin-left: 3%;
+        margin-top: 25px;
+        position: sticky;
+        top: 60px;
+        padding: 20px 0;
+        box-sizing: border-box;
+    }
+    .ShoppingCartList__ProductTitle {
+
+    }
+    .ShoppingCartList__ProductImg {
+        width: 20%;
+    }
+    .ShoppingCartList__ProductImg img{
+        width: 150px;
+        height: 150px;
+    }
+    .ShoppingCartList__TextBlock {
+        width: 60%;
+    }
+    .ShoppingCartList__PriceBlock {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+    }
+    .ShoppingCartList__PriceBlock__QuantityBtn {
+        width: 2em;
+        height: 2em;
+        border-radius: 50%;
+        border: none;
+        background: rgb(179, 176, 176);
+        margin: 0 10px;
+    }
+
+    .ShoppingCartList__PriceBlock__QuantityBtn:hover {
+        cursor: pointer;
+        opacity: 0.7;
+    }
+
+    .ShoppingCartList__PriceBlock__del {
+        width: 30px;
+        height: 30px;
+        border: none;
+        border-radius: 5px;
+        background-image: url('https://img.icons8.com/wired/344/trash.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+
+    .ShoppingCartList__PriceBlock__del:hover {
+        cursor: pointer;
+        opacity: 0.7;
+    }
+
+    .ShoppingCartList__ProductDescription {
+
+    }
+    .ShoppingCartCheckout__clearCart {
+        width: 150px;
+        height: 40px;
+        background: rgb(230, 95, 95);
+        color: white;
+        border: none;
+        border-radius: 15px;
+    }
+    .ShoppingCartCheckout__clearCart:hover {
+        cursor: pointer;
+        opacity: 0.8;
+    }
+
+    .ShoppingCartCheckout__Buy {
+        background: rgb(85, 235, 118);
+        color: white;
+        width: 150px;
+        height: 40px;
+        border: none;
+        border-radius: 15px;
+        
         
     }
+    .ShoppingCartCheckout__Buy:hover {
+        cursor: pointer;
+        opacity: 0.8;
+    }
+
+    .ShoppingCartList__Blur {
+        filter: blur(5px);
+    }
+
     .clearCart {
-        background: rgb(175, 55, 55);
+        width: 30%;
+        height: 30%;
+        background: rgb(8, 183, 237);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 1.5em;
+        color: white;
+        z-index: 1;
     }
-    .clearCart:hover {
-        background: rgb(159, 19, 19);
-    }
-    div img {
-        width: 200px;
-        height: 200px;
-    }
+
 </style>

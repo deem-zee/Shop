@@ -2,22 +2,33 @@
   <div>
     <h1>Products List</h1>
     <input type="text" v-model="search" @keyup="searchItems" class="search" placeholder="Искать" >
-    <ul v-if="search !== ''" class="container">
+    <div v-if="showCard" class="singleProductCard">
+        <img :src="`${singleCard.imgUrl}`" alt="">
+        <h2>{{singleCard.title}}</h2>
+        <p>{{singleCard.description}}</p>
+        <p>{{singleCard.price}}</p>
+        <button class="btn add" @click="pushItemToCart(singleCard)">В корзину</button>
+        <button @click="closeSingleProduct" class="singleProductCard__close">x</button>
+    </div>
+    <div>
+      <ul v-if="search !== ''" class="container">
         <li v-for="product of productsShow[this.currentPage - 1]" :key="product.id" class="container-prod">
-          <p>abrakadabra{{currentPage}}</p>
             <h3>{{product.title}}</h3>
             <img :src='product.image' alt="">
             <p class="price">Price: ${{product.price}}</p>
             <button class="btn add" @click="addToCart(product)">В корзину</button>
         </li>
     </ul>
-    <ul v-if="searchResult[0] == '' || searchResult.length == 0" class="container">
-        <li v-for="product in productsShow[this.currentPage - 1]" :key="product.id" class="container-prod">
-            <p>{{currentPage}}</p>
-            <h3>{{product.title}}</h3>
-            <img :src='product.image' alt="">
-            <p class="price">Price: ${{product.price}}</p>
+    <ul  v-if="search == ''" class="container">
+        <li  v-for="product in productsShow[this.currentPage - 1]" :key="product.id" class="container-prod">
+            <div @click="showSingleProduct(product)">
+              <h3>{{product.title}}</h3>
+              <img :src='product.image' alt="">
+              <p class="price">Price: ${{product.price}}</p>
+            </div>
             <button class="btn add" @click="addToCart(product)">В корзину</button>
+            
+            
         </li>
     </ul>
     <div id="page-block">
@@ -27,6 +38,8 @@
             <button v-bind:disabled = "isLast" @click="nextPage" class="btn">Следующая</button>
             <button v-bind:disabled = "isLast" @click="toLastPage" class="btn">На последнюю</button>
     </div>
+    </div>
+    
   </div>
 </template>
 
@@ -47,6 +60,14 @@ export default {
             searchResult: [],
             isPageLast: false,
             isPageFirst: true,
+            showCard: false,
+            singleCard: {
+              title: '',
+              description: '',
+              imgUrl: '',
+              price: '',
+              id: '',
+            }
         }
     },
    
@@ -73,13 +94,12 @@ export default {
         return false;
       },
       totalPages() {
-        console.log(this.productsShow.length)
         return this.productsShow.length;
       }
     //   
   },
   methods: {
-    ...mapActions(["getProducts", "addToCart"]),
+    ...mapActions(["getProducts", "addToCart", "showId", "pushItemToCart"]),
     nextPage() {
         if (this.currentPage < this.totalPages) {
             this.currentPage++;
@@ -104,8 +124,29 @@ export default {
         return item.title.toLowerCase().match(goal);
       });
       }
+    },
+    showSingleProduct(product) {
+      this.showId(product)
+      .then(result => {
+        let target = this.products.find(item => item.id == product.id);
+        console.log(result)
+        this.singleCard.title = target.title;
+        this.singleCard.description = target.description;
+        this.singleCard.imgUrl = target.image;
+        this.singleCard.price = target.price;
+        this.singleCard.id = target.id;
+      });
+      this.showCard = true;
       
       
+    },
+    closeSingleProduct() {
+      this.showCard = false;
+      this.singleCard.title = '';
+      this.singleCard.description = '';
+      this.singleCard.imgUrl = '';
+      this.singleCard.price = '';
+      this.singleCard.id = '';
     }
   },
   created() {
@@ -146,6 +187,12 @@ export default {
     height: 50px;
     width: 400px;
 }
+
+
+.singleProductCard img{
+  width: 150px;
+  height: 150px;
+},
 
 .error {
   height: 100%;
@@ -213,6 +260,19 @@ input:focus {
 
   border-radius: 10px;
   border: 1px solid #0b43a9;
+}
+
+.singleProductCard__close {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  font-size: 1em;
+  /* transform: rotateZ(45deg) */
+}
+
+.singleProductCard__close:hover {
+  opacity: 0.8;
+  cursor: pointer;
 }
 
 </style>

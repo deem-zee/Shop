@@ -1,8 +1,11 @@
 <template>
     <nav>
         <ul>
-            <li><router-link to="/" exact>Товары</router-link></li>
-            <li><router-link to="/cart" exact> <img class="cartImg" >Корзина</router-link></li>
+           <div>
+                <li><router-link to="/" exact>Товары</router-link></li>
+                <li><router-link to="/cart" exact> <img class="cartImg" >Корзина</router-link></li>
+            </div> 
+            
             <li><router-link to="/autho" exact>Войти</router-link></li>
         </ul>
     </nav>
@@ -21,6 +24,8 @@ ul{
     list-style-type: none;
     text-align: center;
     margin: 0;
+    display: flex;
+    justify-content: space-between;
 }
 li{
     display: inline-block;

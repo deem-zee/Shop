@@ -88,12 +88,12 @@ export const store = new Vuex.Store({
             context.commit('decrementItemQuantity', cartItem)
         },
         showId(context, product) {
-            console.log(product)
+            console.log('showID:', product)
             const singleItem = context.state.products.find(item =>(item.id))
             return singleItem;
         },
         pushItemToCart(context, product) {
-            console.log(context, product)
+            console.log('pushItemToCart: ',product)
             // const cartItem = context.state.products.find(item => (item.id));
             // const product = context.state.cart.find(item =>  {
             //     return (item.id == cartItem.id)
@@ -103,7 +103,12 @@ export const store = new Vuex.Store({
             // } else {
             //     context.commit("incrementItemQuantity", product)
             // }
-            
+            const cartItem = context.state.cart.find(item => item.id === product.id);
+            if (!cartItem) {
+                context.commit('pushProductToCart', product.id)
+               } else {
+                context.commit('incrementItemQuantity', cartItem)
+               }
 
               
         }

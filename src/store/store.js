@@ -32,7 +32,8 @@ export const store = new Vuex.Store({
                         price: product.price,
                         description: product.description,
                         img: product.image,
-                        quantity: cartItem.quantity
+                        quantity: cartItem.quantity,
+                        id: cartItem.id
                     }
 
             })
@@ -82,8 +83,10 @@ export const store = new Vuex.Store({
             const cartItem = context.state.cart.find(item => (item.id));
             context.commit('incrementItemQuantity', cartItem)
         },
-        decrementItem(context) {
-            const cartItem = context.state.cart.find(item => (item.id));
+        decrementItem(context, product) {
+            // const cartItem = context.state.cart.find(item => (item.id));
+            // console.log(product.id)
+            const cartItem = context.state.cart.find(item => item.id === product.id);
             context.commit('decrementItemQuantity', cartItem)
         },
         showId(context, product) {
@@ -124,6 +127,7 @@ export const store = new Vuex.Store({
         },
 
         decrementItemQuantity(state, cartItem) {
+            console.log(cartItem)
             if(cartItem.quantity > 1) {
                cartItem.quantity-- 
             }

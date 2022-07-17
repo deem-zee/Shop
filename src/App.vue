@@ -17,6 +17,12 @@ export default {
 }
 </script>
 
+<style>
+body {
+  margin: 0;
+}
+</style>
+
 <style scoped>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -24,8 +30,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
+
 
 .banner {
   font-size: 70px;

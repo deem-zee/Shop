@@ -20,7 +20,10 @@
                 
                 <div class="ShoppingCartList__PriceBlock">
                     <p style="font-weight:bold">Цена: ${{product.price * product.quantity}}</p>
-                    <p><button @click="decrementItem" class="ShoppingCartList__PriceBlock__QuantityBtn">-</button>кол-во: {{product.quantity}} шт.<button @click="addItemQuantity" class="ShoppingCartList__PriceBlock__QuantityBtn">+</button></p>
+                    <div>
+                        <button @click="decrementItem(product)" class="ShoppingCartList__PriceBlock__QuantityBtn">-</button>
+                        кол-во: {{product.quantity}} шт.<button @click="addToCart(product)" class="ShoppingCartList__PriceBlock__QuantityBtn">+</button>
+                    </div>
                     <button @click="deleteFromCart" class="ShoppingCartList__PriceBlock__del"></button>
                 </div>
 
@@ -178,6 +181,8 @@ export default {
     }
 
     .clearCart {
+        position: fixed;
+        top: 50%;
         width: 300px;
         height: 300px;
         background: white;

@@ -42,6 +42,7 @@ nav{
     margin-bottom: 40px;
     position: sticky;
     top: 0;
+    z-index: 1;
 }
 .router-link-active{
     background: #eee;

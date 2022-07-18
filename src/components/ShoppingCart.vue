@@ -19,7 +19,7 @@
                 <p class="prodDescription">{{product.description}}</p>
                 
                 <div class="ShoppingCartList__PriceBlock">
-                    <p style="font-weight:bold">Цена: ${{product.price * product.quantity}}</p>
+                    <p>Цена: ${{product.price * product.quantity}}</p>
                     <div>
                         <button @click="decrementItem(product)" class="ShoppingCartList__PriceBlock__QuantityBtn">-</button>
                         кол-во: {{product.quantity}} шт.<button @click="addToCart(product)" class="ShoppingCartList__PriceBlock__QuantityBtn">+</button>
@@ -93,15 +93,19 @@ export default {
             width: 340px;
             margin: 0 auto;
             box-sizing: border-box;
-            
+            /* background: grey; */
             
         }
         .ShoppingCartContainer ul {
             padding: 0 5px;
+
         }
 
         .ShoppingCartContainer li {
             list-style:  none;
+            margin: 15px 0;
+            background: white;
+            padding:10px 0;
         }
 
        .ShoppingCartList {
@@ -123,6 +127,7 @@ export default {
             font-size: 18px;
             font-weight: 600;
         }
+        
         .ShoppingCartList__PriceBlock__QuantityBtn:active {
             opacity: 0.8;
         }
@@ -134,12 +139,22 @@ export default {
         background-image: url('https://img.icons8.com/wired/344/trash.png');
         background-repeat: no-repeat;
         background-size: contain;
+        position: relative;
+        top: -30px;
+        left: 120px;
         
     }
+    
+    .ShoppingCartList__PriceBlock p {
+        font-weight: bold;
+    }
+
      .ShoppingCartCheckout {
         display: flex;
         flex-direction: column;
         justify-content: center;
+        background: white;
+        padding-bottom: 20px;
     }
   .ShoppingCartCheckout__clearCart {
         order: 4;
@@ -223,84 +238,67 @@ export default {
     }
 
 /* screen min-width 768 */
-    /* @media screen and (min-width: 768px) {
+    
+    @media screen and (min-width: 768px) {
         .container {
-        background: rgb(236, 234, 234);
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 760px;
+            margin:auto;
+            box-sizing: border-box;
+            
+        }
 
-    }
-     li {
-        list-style-type: none;
-        margin: 10px  0;
-        min-width: 346px;
-     }
-    .ShoppingCartContainer {
+        .container > h1 {
+            margin: 0 auto;
+            background: white;
+            width: 750px;
+        }
+        .ShoppingCartContainer ul {
+            padding: 0 5px;
+            margin: 0;
+
+        }
+
+        .ShoppingCartContainer li {
+            list-style:  none;
+            background: white;
+            padding: 10px 0;
+        }
+        .prodDescription {
+            font-size: 24px;
+            padding: 0 20px;
+        }
+       .ShoppingCartList {
         display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
+        flex-direction: column;
         justify-content: center;
-    }
+       }
+        .ShoppingCartList__ProductImg img{
+            width: 200px;
+            height: 200px;
+        }
+        .ShoppingCartList__PriceBlock__QuantityBtn {
+            height: 25px;
+            width: 25px;
+            border-radius: 50%;
+            border: none;
+            text-align: center;
+            margin: 0 10px;
+            font-size: 18px;
+            font-weight: 600;
+            transform: scale(1.5)
+        }
 
-     ul {
-        width: 50%;
-    }
-
-    .ShoppingCartList {
-        width: 100%;
-        padding: 15px;
-        box-sizing: border-box;
-        background: white;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: space-around;
-    }
-    .ShoppingCartCheckout {
-        width: 20%;
-        height: fit-content;
-        background: white;
-        margin-left: 3%;
-        margin-top: 25px;
-        position: sticky;
-        top: 60px;
-        padding: 20px 0;
-        box-sizing: border-box;
-    }
-    .ShoppingCartList__ProductTitle {
-
-    }
-    .ShoppingCartList__ProductImg {
-        width: 20%;
-    }
-    .ShoppingCartList__ProductImg img{
-        width: 150px;
-        height: 150px;
-    }
-    .ShoppingCartList__TextBlock {
-        width: 60%;
-    }
-    .ShoppingCartList__PriceBlock {
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-
-    }
-    .ShoppingCartList__PriceBlock__QuantityBtn {
-        width: 2em;
-        height: 2em;
-        border-radius: 50%;
-        border: none;
-        background: rgb(179, 176, 176);
-        margin: 0 10px;
-    }
-
-    .ShoppingCartList__PriceBlock__QuantityBtn:hover {
-        cursor: pointer;
-        opacity: 0.7;
-    }
-
-    .ShoppingCartList__PriceBlock__del {
+        .ShoppingCartList__PriceBlock__QuantityBtn:hover {
+            cursor: pointer;
+        }
+        
+        .ShoppingCartList__PriceBlock__QuantityBtn:active {
+            opacity: 0.8;
+        }
+        .ShoppingCartList__PriceBlock__del {
         width: 30px;
         height: 30px;
         border: none;
@@ -308,23 +306,38 @@ export default {
         background-image: url('https://img.icons8.com/wired/344/trash.png');
         background-repeat: no-repeat;
         background-size: contain;
+        position: relative;
+        top: -30px;
+        left: 120px;
+        
+    }
+    
+    .ShoppingCartList__PriceBlock p {
+        font-weight: bold;
+        font-size: 26px;;
     }
 
-    .ShoppingCartList__PriceBlock__del:hover {
-        cursor: pointer;
-        opacity: 0.7;
-    }
-
-    .ShoppingCartList__ProductDescription {
-
+     .ShoppingCartCheckout {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: white;
+        width: 750px;
+        margin: 0 auto;
+        padding-bottom: 20px;
     }
     .ShoppingCartCheckout__clearCart {
-        width: 150px;
+        order: 4;
+        width: 160px;
         height: 40px;
         background: rgb(230, 95, 95);
         color: white;
         border: none;
         border-radius: 15px;
+        margin: 10px 0;
+        align-self: center;
+        font-size: 18px;
+        padding: 5px 0;
     }
     .ShoppingCartCheckout__clearCart:hover {
         cursor: pointer;
@@ -334,10 +347,12 @@ export default {
     .ShoppingCartCheckout__Buy {
         background: rgb(85, 235, 118);
         color: white;
-        width: 150px;
+        width: 160px;
         height: 40px;
         border: none;
         border-radius: 15px;
+        font-size: 18px;
+        padding: 5px 0;
         
         
     }
@@ -346,23 +361,62 @@ export default {
         opacity: 0.8;
     }
 
+    .ShoppingCartCheckout p {
+        font-size: 34px;
+    }
     .ShoppingCartList__Blur {
         filter: blur(5px);
     }
 
     .clearCart {
-        width: 30%;
-        height: 30%;
-        background: rgb(8, 183, 237);
+        position: fixed;
+        top: 50%;
+        width: 300px;
+        height: 300px;
+        background: white;
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
         font-size: 1.5em;
-        color: white;
+        color: #000;
         z-index: 1;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
+    .clearCart_confirm {
+        background: rgb(230, 95, 95);
+        color: white;
+        width: 150px;
+        height: 30px;
+        margin: 10px 0;
+        border-radius: 10px;
+        font-size: 20px;
+        border: none;
     }
-     */
+    .clearCart_cansel {
+        background: rgb(85, 235, 118);
+        color: white;
+        width: 150px;
+        height: 30px;
+        margin: 10px 0;
+        border-radius: 10px;
+        font-size: 20px;
+        border: none;
+    }
+    
+    .emptyShoppingCart {
+        font-size: 40px;
+        background: white;
+        width: 750px;
+        margin: 0 auto;
+        padding: 50px 0;
+    }
+
+    }
+     
 
 </style>

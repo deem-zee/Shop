@@ -17,8 +17,9 @@ export default ({
 </script>
 
 <style scoped>
+
 @media screen and (min-width: 340px) {
-    ul{
+ul{
     list-style-type: none;
     text-align: center;
     margin: 0;
@@ -72,9 +73,11 @@ a{
 nav{
     background: #444;
     padding: 14px 0;
-    margin-bottom: 40px;
+    margin: 0 auto;
+    /* margin-bottom: 40px; */
     position: sticky;
     top: 0;
+    width: 750px;
 }
 .router-link-active{
     background: #eee;

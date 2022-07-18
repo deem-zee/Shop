@@ -45,7 +45,7 @@ export const store = new Vuex.Store({
                 return total += prod.price * cartItem.quantity;
             }));
 
-            return  total;
+            return  total.toFixed(2);
         },
     },
 
@@ -85,8 +85,6 @@ export const store = new Vuex.Store({
             context.commit('incrementItemQuantity', cartItem)
         },
         decrementItem(context, product) {
-            // const cartItem = context.state.cart.find(item => (item.id));
-            // console.log(product.id)
             const cartItem = context.state.cart.find(item => item.id === product.id);
             context.commit('decrementItemQuantity', cartItem)
         },
@@ -95,17 +93,6 @@ export const store = new Vuex.Store({
             const singleItem = context.state.products.find(item =>(item.id))
             return singleItem;
         },
-        // pushItemToCart(context, product) {
-        //     const cartItem = context.state.cart.find(item => item.id === product.id);
-        //     if (!cartItem) {
-        //         context.commit('pushProductToCart', product.id)
-        //        } else {
-        //         context.commit('incrementItemQuantity', cartItem)
-        //        }
-
-              
-        // }
-        
 
     },
 

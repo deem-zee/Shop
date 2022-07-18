@@ -172,7 +172,7 @@ export default {
 @media screen and (min-width: 340px) {
   .productListTemplate {
     width: 340px;
-    background: rgb(177, 174, 174);
+    background: rgb(220, 217, 217);
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -225,7 +225,7 @@ export default {
 
   .productListContainer {
     width: 340px;
-    background: rgb(177, 174, 174);
+    background: rgb(220, 217, 217);
     margin: 10px auto;
   }
 
@@ -330,6 +330,174 @@ export default {
 
 }
 
+/* @media 768px */
+@media screen and (min-width: 768px) {
+  .productListTemplate {
+    width: 750px;
+    background: rgb(220, 217, 217);
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    margin: 0 auto;
+
+  }
+
+  .singleProductCard {
+    position: fixed;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    z-index: 1;
+    background: white;
+    padding: 10px 0;
+    font-family: 'Roboto', sans-serif;
+    margin: 0 auto;
+    
+  }
+
+  .singleProductCard__img {
+    width: 200px;
+    height: 200px;
+  } 
+
+  .singleProductCard__price {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+  }
+  .singleProductCard__close {
+    width:30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    font-size: 20px;
+    position: absolute;
+    top: 5px;
+    left: 88%;
+  }
+  .container {
+    margin: 0 auto;
+    padding: 0; 
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+  }
+
+  .productListContainer {
+    width: 750px;
+    background: rgb(220, 217, 217);
+    margin: 10px auto;
+  }
+
+  .productListContainer img {
+    width: 200px;
+    height: 200px;
+  }
+  .productListContainer__products {
+  background: white;
+  list-style: none;
+  width: 750px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  margin: 10px auto;
+  padding: 10px;
+  box-sizing: border-box;
+
+}
+
+.price {
+  font-weight: 600;
+}
+
+.addBtn {
+  width: 150px;
+  height: 40px;
+  background: rgb(85, 235, 118);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  margin: 0 auto;
+}
+
+.addBtn:hover {
+  cursor: pointer;
+}
+
+.addBtn:active {
+  opacity: 0.4;
+  
+}
+.search {
+  height: 50px;
+  font-size: 24px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.page-block {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background: white;
+  width: 750px;
+  margin: 0 auto;
+  padding: 10px 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+.page-block span {
+  order: 3;
+  position: relative;
+  top: 7px;
+  background: white;
+  font-family: 'Roboto', sans-serif;
+  margin: 2px 4px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.page-block button {
+  margin: 2px 4px;
+  width: 100px;
+  height: 40px;
+  font-family: 'Roboto', sans-serif;
+  border-radius: 5px;
+  border: none;
+  font-size: 16px;
+}
+
+.page-block button:hover {
+  cursor: pointer;
+}
+
+.btnPrev {
+  order: 2;
+}
+
+.btnFwd {
+  order: 4;
+}
+
+.btnFirst {
+  order: 1;
+}
+
+.btnLast {
+  order: 5;
+  margin: 2px 4px;
+}
+
+.blur {
+  filter: blur(5px);
+}
+
+}
 
 
 </style>

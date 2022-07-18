@@ -49,9 +49,10 @@ export default {
          } else {
           alert('Данные введены неверно')
          }
-        
-        
-      }
+      },
+      authorise() {
+        alert('сервер не отвечает, попробуйте войти позже')
+        }
     }
 }
 </script>
@@ -59,11 +60,12 @@ export default {
 <style scoped>
 @media screen and (min-width: 360px) {
   .container {
-    /* width: 100%; */
     display: flex;
+    justify-content: center;
   }
   .authorisation, .registration {
     width: 340px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -100,103 +102,43 @@ export default {
 
 
 @media screen and (min-width: 768px) {
-  .container {
-  margin: 0 auto;
-  border: 1px solid grey;
-  width: 60%;
-  margin-top: 30px;
-}
+ .container {
+    display: flex;
+    justify-content: center;
+  }
+  .authorisation, .registration {
+    width: 340px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-.registration {
-  padding: 3% 5%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center; 
-}
+  .authorisation__header {
+    font-size: 24px;
+  }
 
-.btn:hover {
-  cursor: pointer;
-}
+  .authorisation .authorisation__login, .authorisation__paswd, .authorisation__forget, .authorisation__submit, .authorisation__reg, .regForm,.registration__createAcc {
+    height: 50px;
+    width: 450px;
+    margin: 20px 0;
+    font-size: 22px;
+    border-radius: 5px;
+  }
+  .authorisation__forget {
+    border: none;
+    font-style: italic;
+    background: rgb(220, 217, 217);
+  }
+  .authorisation__submit, .authorisation__reg, .registration__createAcc {
+    background: rgb(14, 81, 239);
+    color: white;
+    border: none;
+  }
 
-.authorisation{
-  padding: 3% 5%;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.authorisation__header {
-  width: 80%;
-  font-size: 1.5em;
-  align-self: center;
-}
-/* .authorisation__login {
-  width: 60%;
-  height: 40px;
-  margin: 2%;
-  font-size: 1.2em;
-  box-sizing: border-box;
-} */
-.authorisation__login, .authorisation__paswd, .regForm {
-  width: 60%;
-  height: 40px;
-  margin: 2%;
-  font-size: 1.2em;
-  box-sizing: border-box;
-}
-.authorisation__forget {
-  width: 60%;
-  height: 40px;
-  margin: 2%;
-  font-size: 1.2em;
-  border: none;
-  background: white;
-  font-style: italic;
-}
-.authorisation__submit {
-  width: 60%;
-  height: 40px;
-  margin: 2%;
-  font-size: 1.2em;
-  color: rgb(14, 81, 239);
-}
-
-.regiostration__createAcc {
-  width: 80%;
-  height: 40px;
-  margin: 2%;
-  font-size: 1.2em;
-  color: rgb(14, 81, 239);
-}
-
-.authorisation__reg{
-  width: 60%;
-  height: 40px;
-  margin: 2%;
-  font-size: 1.2em;
-  color: rgb(14, 81, 239);
-}
-
-.active {
-  background: rgb(14, 81, 239);
-  color: white;
-  width: 60%;
-  height: 40px;
-  margin: 2%;
-  font-size: 1.2em;
-}
-.active:hover {
-  background: rgb(81, 131, 248);
-}
-
-.regForm {
-  width: 60%;
-  height: 40px;
-  margin: 2%;
-  font-size: 1.2em;
-}
+  .authorisation__submit:active, .authorisation__reg:active, .registration__createAcc:active {
+    opacity: 0.8;
+  }
 }
 
 </style>

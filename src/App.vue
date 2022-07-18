@@ -20,6 +20,7 @@ export default {
 <style>
 body {
   margin: 0;
+  background: rgb(220, 217, 217);
 }
 </style>
 

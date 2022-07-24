@@ -5,7 +5,7 @@
       <input class="authorisation__login" type="text" placeholder="Логин">
       <input class="authorisation__paswd" type="password" placeholder="Пароль">
       <button class="btn authorisation__forget">Забыли пароль?</button>
-      <button @click='autho' :class="{active:authorisation}" class="btn authorisation__submit">Войти</button>
+      <button @click='authorise' :class="{active:authorisation}" class="btn authorisation__submit">Войти</button>
       <button @click='reg' :class="{active:registration}" class="btn authorisation__reg">Регистрация</button>
     </div>
 

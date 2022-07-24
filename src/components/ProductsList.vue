@@ -2,7 +2,7 @@
   <div class="productListTemplate">
     <!-- Блок выбранного товара с подробным описанием товара -->
     <div v-if="showCard" class="singleProductCard">
-      <div class="singleProductCard__product">
+        <div class="singleProductCard__product">
         <img :src="`${singleCard.imgUrl}`" alt="" class="singleProductCard__img">
         <div class="singleProductCard__text">
           <h2>{{singleCard.title}}</h2>

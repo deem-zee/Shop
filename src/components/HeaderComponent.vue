@@ -6,6 +6,13 @@
             <li><router-link to="/autho" exact>Войти</router-link></li>
         </ul>
     </nav>
+     <!-- <nav>
+        <ul class="flex flex-row bg-gray-700 ">
+            <li class="bg-slate-100"><router-link to="/" exact>Товары</router-link></li>
+            <li><router-link to="/cart" exact> <img class="cartImg" >Корзина</router-link></li>
+            <li><router-link to="/autho" exact>Войти</router-link></li>
+        </ul>
+    </nav> -->
 </template>
 
 <script>
@@ -74,7 +81,6 @@ nav{
     background: #444;
     padding: 14px 0;
     margin: 0 auto;
-    /* margin-bottom: 40px; */
     position: sticky;
     top: 0;
     width: 750px;

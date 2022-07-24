@@ -50,22 +50,34 @@ export const store = new Vuex.Store({
     },
 
     actions: {
-        getProducts(context){
-            Vue.axios.get('https://fakestoreapi.com/products')
-           .then((response) => {
-                context.commit("setProducts", response.data)
-              })
-            .catch(err => {
-                if(err.response) {
+        // getProducts(context){
+        //     Vue.axios.get('https://fakestoreapi.com/products')
+        //    .then((response) => {
+        //         context.commit("setProducts", response.data)
+        //       })
+        //     .catch(err => {
+        //         if(err.response) {
 
-                    console.log(err.response.status);
-                    context.commit("getError", err.response.status)
+        //             console.log(err.response.status);
+        //             context.commit("getError", err.response.status)
+        //         }
+        //     }) 
+        // },
+        async getProducts(context) {
+            try {
+               let response = await Vue.axios.get('https://fakestoreapi.com/products'); 
+               context.commit("setProducts", response.data)
+            } catch(e) {
+                if(e.response) {
+                    console.log(e.response.status);
+                    context.commit("getError", e.response.status)
                 }
-            }) 
+            }
+            
+
         },
 
         addToCart(context, product) {
-            console.log(product)
             const cartItem = context.state.cart.find(item => item.id === product.id);
             if (!cartItem) {
                 context.commit('pushProductToCart', product.id)
